@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const api = 'https://api.nationalize.io';
+let api = 'https://api.nationalize.io';
 
 const http = axios.create({
   baseURL: api,

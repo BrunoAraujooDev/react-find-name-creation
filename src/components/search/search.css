@@ -10,7 +10,17 @@
   padding: 15px;
   border-bottom-left-radius: 8px;
   border-top-left-radius: 8px;
-  box-shadow: -1px 6px 12px -5px #000;
+  box-shadow: -1px 1px 12px -5px #000;
   /* border-radius: 8px 8px 8px 0px; */
   border: 1px solid #000;
+}
+
+#btn-search {
+  height: 32px;
+  padding: 2px 15px;
+  font-weight: 700;
+  border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;
+  border: 1px solid #000;
+  box-shadow: -1px 1px 12px -5px #000;
 }
