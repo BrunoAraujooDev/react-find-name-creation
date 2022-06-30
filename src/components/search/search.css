@@ -1,0 +1,16 @@
+#div-search {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+#input-search {
+  height: 32px;
+  width: 60%;
+  padding: 15px;
+  border-bottom-left-radius: 8px;
+  border-top-left-radius: 8px;
+  box-shadow: -1px 6px 12px -5px #000;
+  /* border-radius: 8px 8px 8px 0px; */
+  border: 1px solid #000;
+}
