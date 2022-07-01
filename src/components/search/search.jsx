@@ -15,6 +15,8 @@ const Search = () => {
 
   const getNameAndValidate = () => {
     let name = inputValue.split(' ');
+    console.log(name);
+    console.log(name.length);
 
     if (name.length > 10) {
       setValid(false);
@@ -26,8 +28,9 @@ const Search = () => {
 
       setValid(validationName.valid);
       setMessage(validationName.message);
+
+      valid && requestOrigin(name);
     }
-    valid && requestOrigin(name);
   };
 
   const requestOrigin = async (name) => {
@@ -56,13 +59,14 @@ const Search = () => {
         <button
           type="button"
           id="btn-search"
+          disabled={inputValue.length < 2}
           onClick={() => getNameAndValidate()}
         >
           Search
         </button>
       </div>
       {!valid && <p className="p-search"> {message} </p>}
-      {result && <Nationality result={result} />}
+      {result && valid ? <Nationality result={result} /> : ''}
     </>
   );
 };
