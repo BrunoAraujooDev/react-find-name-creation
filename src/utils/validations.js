@@ -1,24 +1,31 @@
 export const validName = (name) => {
   const regex = /[^a-záàâãéèêíïóôõöúçñ]/;
-  let isValid;
-  let message = '';
+  let isValid = [];
+  let message = [];
+  let valid;
 
-  name.map((item) => {
-    isValid = item.match(regex) ? false : true;
+  for (let i = 0; i < name.length; i++) {
+    let validation = name[i].match(regex) !== null ? true : false;
+    isValid.push(validation);
 
-    if (isValid === false) {
-      message = `${item} is not a valid name. Please insert names without digits  or special characters.`;
+    if (isValid[i]) {
+      message.push(
+        `${name[i]} is not a valid name. Please insert names without digits  or special characters.`
+      );
     }
-  });
+  }
+
+  valid = isValid.some((item) => item === true);
 
   return {
-    valid: isValid,
+    valid,
     message: message,
   };
 };
 
 export const validDuplication = (value) => {
-  const data = [...new Set(value)];
+  let data = [...new Set(value)];
+  data = data.filter((item) => item);
 
   return data;
 };

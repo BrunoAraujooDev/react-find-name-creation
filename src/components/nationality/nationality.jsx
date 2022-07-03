@@ -5,50 +5,80 @@ import './nationality.css';
 
 const Nationality = ({ result, goto = false }) => {
   const [loading, setLoading] = useState(goto);
-  const [countries, setCountries] = useState('');
+  const [countries, setCountries] = useState(goto);
 
   const CreateList = () => {
     if (result.data) {
       return (
-        <ul>
+        <ul className="ul-nationality ">
           {result.data.map((item, i) => {
-            let resp = getCountries(item.country[0].country_id);
+            let countryId = item.country[0]?.country_id;
+            console.log('item.country[0]', item.country[0]);
+            let resp =
+              item.country[0] !== undefined ? getCountries(countryId) : '';
 
             return (
-              <li key={i}>
+              <li key={i} className="li-nationality">
                 <img
-                  src={`https://countryflagsapi.com/png/${item.country[0].country_id}`}
-                  alt={`${item.country[0].country_id} flag  `}
+                  src={
+                    resp !== ''
+                      ? `https://countryflagsapi.com/png/${countryId}`
+                      : 'https://static.wikia.nocookie.net/althistory/images/b/b0/No_flag.svg/revision/latest?cb=20070617053419'
+                  }
+                  alt={resp !== '' ? `${countryId} flag` : 'No flag'}
                   className="img-nationality"
                 />
-                <h1>Country: {resp}</h1>
-                <h3>Name requested: {result.data[i]?.name}</h3>
+                <h1>
+                  <span className="span-nationality">Country:</span>{' '}
+                  {resp !== '' ? resp : 'Not Found'}
+                </h1>
+                <h3>
+                  <span className="span-nationality">Name requested: </span>
+                  {result.data[i]?.name}
+                </h3>
               </li>
             );
           })}
         </ul>
       );
     } else {
-      let country = getCountries(result.country[0].country_id);
+      let countryId = result.country[0]?.country_id;
+
+      let country = countryId !== undefined ? getCountries(countryId) : '';
+
       return (
-        <li>
-          <img
-            src={`https://countryflagsapi.com/png/${result.country[0].country_id}`}
-            alt={`${result.country[0].country_id} flag  `}
-            className="img-nationality"
-          />
-          <h1>Country: {country}</h1>
-          <h3>Name requested: {result.name}</h3>
-        </li>
+        <ul className="ul-nationality">
+          <li className="li-nationality">
+            <img
+              src={
+                country !== ''
+                  ? `https://countryflagsapi.com/png/${countryId}`
+                  : 'https://static.wikia.nocookie.net/althistory/images/b/b0/No_flag.svg/revision/latest?cb=20070617053419'
+              }
+              alt={country !== '' ? `${countryId} flag` : 'No flag'}
+              className="img-nationality"
+            />
+            <h1>
+              <span className="span-nationality">Country:</span>{' '}
+              {country !== '' ? country : 'Not Found'}
+            </h1>
+            <h3>
+              <span className="span-nationality">Name requested: </span>
+              {result.name}
+            </h3>
+          </li>
+        </ul>
       );
     }
   };
 
   return (
     <>
-      <section id="section-nationality">
-        <CreateList />
-      </section>
+      {loading && (
+        <section id="section-nationality">
+          <CreateList />
+        </section>
+      )}
     </>
   );
 };

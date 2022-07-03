@@ -11,12 +11,10 @@ const Search = () => {
   const [result, setResult] = useState('');
   const [inputValue, setInputValue] = useState('');
   const [valid, setValid] = useState(true);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState([]);
 
   const getNameAndValidate = () => {
     let name = inputValue.split(' ');
-    console.log(name);
-    console.log(name.length);
 
     if (name.length > 10) {
       setValid(false);
@@ -29,7 +27,7 @@ const Search = () => {
       setValid(validationName.valid);
       setMessage(validationName.message);
 
-      valid && requestOrigin(name);
+      !validationName.valid && requestOrigin(resp);
     }
   };
 
@@ -59,14 +57,21 @@ const Search = () => {
         <button
           type="button"
           id="btn-search"
-          disabled={inputValue.length < 2}
           onClick={() => getNameAndValidate()}
         >
           Search
         </button>
       </div>
-      {!valid && <p className="p-search"> {message} </p>}
-      {result && valid ? <Nationality result={result} /> : ''}
+      {valid &&
+        message.map((item, i) => {
+          return (
+            <p className="p-search" key={i}>
+              {' '}
+              {item}{' '}
+            </p>
+          );
+        })}
+      {result && <Nationality result={result} goto={true} />}
     </>
   );
 };
