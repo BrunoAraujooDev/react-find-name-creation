@@ -17,9 +17,12 @@ const Search = () => {
     let name = inputValue.split(' ');
     let resp = validDuplication(name);
 
-    if (resp.length > 10 || resp.length === 0) {
+    if (resp.length > 10) {
       setValid(true);
       setMessage('The max number of names per request is 10 at once!');
+    } else if (resp.length === 0) {
+      setValid(true);
+      setMessage('Please, write a name!');
     } else {
       let validationName = validName(resp);
 
@@ -57,6 +60,7 @@ const Search = () => {
           type="button"
           id="btn-search"
           onClick={() => getNameAndValidate()}
+          disabled={inputValue.length < 1}
         >
           Search
         </button>
