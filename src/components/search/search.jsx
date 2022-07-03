@@ -17,7 +17,7 @@ const Search = () => {
     let name = inputValue.split(' ');
     let resp = validDuplication(name);
 
-    if (resp.length > 10) {
+    if (resp.length > 10 || resp.length === 0) {
       setValid(true);
       setMessage('The max number of names per request is 10 at once!');
     } else {

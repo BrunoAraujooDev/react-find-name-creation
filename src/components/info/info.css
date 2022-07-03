@@ -3,11 +3,17 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  padding: 3rem;
+}
+
+.container-div {
+  display: flex;
+  justify-content: center;
 }
 
 .info-img-thinkig {
-  width: 20rem;
-  height: 20rem;
+  width: 10rem;
+  height: 12rem;
   margin-right: 8rem;
 }
 
@@ -17,8 +23,7 @@
   color: #000;
   padding: 1.2rem;
   border-radius: 8px;
-  margin-right: 10rem;
-  width: 25rem;
+  max-width: 25rem;
   text-align: justify;
   line-height: 1.5rem;
 }
@@ -27,4 +32,23 @@
   margin-top: 0.5rem;
   text-decoration: underline;
   font-size: 1.2rem;
+}
+
+@media (max-width: 800px) {
+  .info-section {
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100vh;
+  }
+}
+
+@media (max-width: 600px) {
+  .container-div {
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  .info-img-thinkig {
+    display: none;
+  }
 }

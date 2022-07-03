@@ -10,11 +10,12 @@
 }
 
 .arrow-div-info {
-  height: 4.5rem;
-  width: 4.5rem;
+  height: 70px;
+  width: 70px;
 }
 
 .arrow-div-info > img {
   width: 100%;
   height: 100%;
+  margin-left: 3rem;
 }
