@@ -1,0 +1,30 @@
+.info-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.info-img-thinkig {
+  width: 20rem;
+  height: 20rem;
+  margin-right: 8rem;
+}
+
+.info-div {
+  background-color: #fff;
+  border: 1px solid #000;
+  color: #000;
+  padding: 1.2rem;
+  border-radius: 8px;
+  margin-right: 10rem;
+  width: 25rem;
+  text-align: justify;
+  line-height: 1.5rem;
+}
+
+.info-div > p:last-child {
+  margin-top: 0.5rem;
+  text-decoration: underline;
+  font-size: 1.2rem;
+}

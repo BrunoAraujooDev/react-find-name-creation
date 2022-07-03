@@ -6,6 +6,38 @@
   height: 20vh;
 }
 
+.slideIn {
+  -webkit-animation-name: slideInRight;
+  animation-name: slideInRight;
+  -webkit-animation-duration: 0.5s;
+  animation-duration: 0.5s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@-webkit-keyframes slideInRight {
+  0% {
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+    visibility: visible;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@keyframes slideInRight {
+  0% {
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+    visibility: visible;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+
 #input-search {
   height: 32px;
   width: 60%;
@@ -27,7 +59,8 @@
 }
 
 .p-search {
-  color: red;
+  color: rgb(163, 5, 5);
+  font-weight: bold;
   font-size: 14px;
   margin: 0.5rem 0;
 }

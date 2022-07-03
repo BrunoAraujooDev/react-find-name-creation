@@ -13,7 +13,6 @@ const Nationality = ({ result, goto = false }) => {
         <ul className="ul-nationality ">
           {result.data.map((item, i) => {
             let countryId = item.country[0]?.country_id;
-            console.log('item.country[0]', item.country[0]);
             let resp =
               item.country[0] !== undefined ? getCountries(countryId) : '';
 

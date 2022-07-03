@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './search.css';
 import {
   getNameOrigin,
@@ -15,13 +15,12 @@ const Search = () => {
 
   const getNameAndValidate = () => {
     let name = inputValue.split(' ');
+    let resp = validDuplication(name);
 
-    if (name.length > 10) {
-      setValid(false);
+    if (resp.length > 10) {
+      setValid(true);
       setMessage('The max number of names per request is 10 at once!');
     } else {
-      let resp = validDuplication(name);
-
       let validationName = validName(resp);
 
       setValid(validationName.valid);
@@ -29,6 +28,8 @@ const Search = () => {
 
       !validationName.valid && requestOrigin(resp);
     }
+
+    message && setResult('');
   };
 
   const requestOrigin = async (name) => {
@@ -40,14 +41,12 @@ const Search = () => {
     }
   };
 
-  useEffect(() => {}, [valid, result]);
-
   return (
     <>
-      <div id="div-search">
+      <div id="div-search" className="slideIn">
         <input
           type="text"
-          placeholder="Type here..."
+          placeholder="Type your name here..."
           id="input-search"
           value={inputValue}
           onChange={(e) => {
@@ -62,7 +61,7 @@ const Search = () => {
           Search
         </button>
       </div>
-      {valid &&
+      {valid && typeof message !== 'string' ? (
         message.map((item, i) => {
           return (
             <p className="p-search" key={i}>
@@ -70,7 +69,10 @@ const Search = () => {
               {item}{' '}
             </p>
           );
-        })}
+        })
+      ) : (
+        <p className="p-search"> {message} </p>
+      )}
       {result && <Nationality result={result} goto={true} />}
     </>
   );
