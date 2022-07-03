@@ -5,7 +5,6 @@ import './nationality.css';
 
 const Nationality = ({ result, goto = false }) => {
   const [loading, setLoading] = useState(goto);
-  const [countries, setCountries] = useState(goto);
 
   const CreateList = () => {
     if (result.data) {

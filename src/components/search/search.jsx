@@ -16,6 +16,7 @@ const Search = () => {
   const getNameAndValidate = () => {
     let name = inputValue.split(' ');
     let resp = validDuplication(name);
+    let validationName;
 
     if (resp.length > 10) {
       setValid(true);
@@ -24,12 +25,12 @@ const Search = () => {
       setValid(true);
       setMessage('Please, write a name!');
     } else {
-      let validationName = validName(resp);
+      validationName = validName(resp);
 
       setValid(validationName.valid);
       setMessage(validationName.message);
 
-      !validationName.valid && requestOrigin(resp);
+      !validationName?.valid && requestOrigin(resp);
     }
 
     message && setResult('');
