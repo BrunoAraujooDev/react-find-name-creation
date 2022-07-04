@@ -3,15 +3,14 @@ import getCountries from '../../utils/getCountries';
 
 import './nationality.css';
 
-const Nationality = ({ result, goto = false }) => {
-  const [loading, setLoading] = useState(goto);
-
+const Nationality = ({ result }) => {
   const CreateList = () => {
-    if (result.data) {
+    if (result.length > 1) {
       return (
         <ul className="ul-nationality ">
-          {result.data.map((item, i) => {
+          {result.map((item, i) => {
             let countryId = item.country[0]?.country_id;
+
             let resp =
               item.country[0] !== undefined ? getCountries(countryId) : '';
 
@@ -21,18 +20,18 @@ const Nationality = ({ result, goto = false }) => {
                   src={
                     resp !== ''
                       ? `https://countryflagsapi.com/png/${countryId}`
-                      : 'https://static.wikia.nocookie.net/althistory/images/b/b0/No_flag.svg/revision/latest?cb=20070617053419'
+                      : 'https://medphoton.com.br/wp-content/themes/apexclinic/images/no-image/No-Image-Found-400x264.png'
                   }
                   alt={resp !== '' ? `${countryId} flag` : 'No flag'}
                   className="img-nationality"
                 />
                 <h1>
                   <span className="span-nationality">Country:</span>{' '}
-                  {resp !== '' ? resp : 'Not Found'}
+                  {resp ? resp : 'Not Found'}
                 </h1>
                 <h3>
                   <span className="span-nationality">Name requested: </span>
-                  {result.data[i]?.name}
+                  {item.name}
                 </h3>
               </li>
             );
@@ -40,7 +39,10 @@ const Nationality = ({ result, goto = false }) => {
         </ul>
       );
     } else {
-      let countryId = result.country[0]?.country_id;
+      let isArray = result instanceof Array;
+      let countryId = isArray
+        ? result[0].country[0].country_id
+        : result.country[0].country_id;
 
       let country = countryId !== undefined ? getCountries(countryId) : '';
 
@@ -62,7 +64,7 @@ const Nationality = ({ result, goto = false }) => {
             </h1>
             <h3>
               <span className="span-nationality">Name requested: </span>
-              {result.name}
+              {isArray ? result[0].name : result.name}
             </h3>
           </li>
         </ul>
@@ -72,11 +74,9 @@ const Nationality = ({ result, goto = false }) => {
 
   return (
     <>
-      {loading && (
-        <section id="section-nationality">
-          <CreateList />
-        </section>
-      )}
+      <section id="section-nationality">
+        <CreateList />
+      </section>
     </>
   );
 };

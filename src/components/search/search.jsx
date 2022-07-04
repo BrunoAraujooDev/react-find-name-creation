@@ -6,6 +6,9 @@ import {
 } from '../../services/nationality.service.js';
 import Nationality from '../nationality/nationality';
 import { validName, validDuplication } from '../../utils/validations.js';
+import { findNames } from '../../utils/findNames.js';
+
+let names = [];
 
 const Search = () => {
   const [result, setResult] = useState('');
@@ -17,6 +20,7 @@ const Search = () => {
     let name = inputValue.split(' ');
     let resp = validDuplication(name);
     let validationName;
+    let compareArray;
 
     if (resp.length > 10) {
       setValid(true);
@@ -26,20 +30,41 @@ const Search = () => {
       setMessage('Please, write a name!');
     } else {
       validationName = validName(resp);
-
       setValid(validationName.valid);
       setMessage(validationName.message);
 
-      !validationName?.valid && requestOrigin(resp);
+      compareArray = findNames(resp, names);
+
+      if (
+        !compareArray &&
+        names.length !== resp.length &&
+        names.length !== 0 &&
+        validationName !== undefined &&
+        result !== ''
+      ) {
+        setResult(() => {
+          const data = result.filter((item, i) => item.name === resp[i]);
+          return data;
+        });
+      }
+
+      if (
+        !validationName.valid &&
+        compareArray &&
+        names.length !== resp.length
+      ) {
+        requestOrigin(resp);
+        names = resp;
+      }
     }
 
-    message && setResult('');
+    message.length > 0 && setResult('');
   };
 
   const requestOrigin = async (name) => {
     if (name.length > 1) {
       const resp = await getNamesOrigin(name);
-      setResult(resp);
+      setResult(resp.data);
     } else {
       await getNameOrigin(name).then((resp) => setResult(resp));
     }
@@ -70,15 +95,14 @@ const Search = () => {
         message.map((item, i) => {
           return (
             <p className="p-search" key={i}>
-              {' '}
-              {item}{' '}
+              {item}
             </p>
           );
         })
       ) : (
         <p className="p-search"> {message} </p>
       )}
-      {result && <Nationality result={result} goto={true} />}
+      {result && <Nationality result={result} />}
     </>
   );
 };
