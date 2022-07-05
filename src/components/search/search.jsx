@@ -73,8 +73,6 @@ const Search = () => {
         names = resp;
       }
     }
-
-    message.length > 0 && setResult('');
   };
 
   const requestNewNames = async (name) => {

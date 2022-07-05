@@ -39,10 +39,7 @@ const Nationality = ({ result }) => {
         </ul>
       );
     } else {
-      let isArray = result instanceof Array;
-      let countryId = isArray
-        ? result[0].country[0]?.country_id
-        : result.country[0]?.country_id;
+      let countryId = (result[0] || result).country[0]?.country_id;
 
       let country = countryId !== undefined ? getCountries(countryId) : '';
 
@@ -64,9 +61,7 @@ const Nationality = ({ result }) => {
             </h1>
             <h3>
               <span className="span-nationality">Name requested: </span>
-              {isArray
-                ? result[0].name.toLowerCase()
-                : result.name.toLowerCase()}
+              {(result[0] || result).name.toLowerCase()}
             </h3>
           </li>
         </ul>
