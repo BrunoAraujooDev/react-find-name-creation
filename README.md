@@ -42,7 +42,8 @@ Foi utilizado uma arquitetura de projeto pensando na melhor organização de arq
 
 - Arquivo db.json: Um JSON com as informações dos países, como nome e código do mesmo.
 
-## Explicando as principais lógicas
+
+## Explicando as principais lógicas :keyboard:
 
 - Arquivo: validations.js -> Utilizei o regex pra validar os nomes que são procurados pelo usuário, de modo que, apenas nomes válidos possam ser procurados. Cada nome fora do padrão é armazenado num array e é retornado pela função, onde o componente que a chama renderiza na tela um aviso com os nomes que não são válidos pra busca. Ex: nomes com caracteres especiais ou números.
 
