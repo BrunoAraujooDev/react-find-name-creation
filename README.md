@@ -26,7 +26,7 @@ Inicialização da aplicação:
 npm start
 ```
 
-## Explicando a arquitetura
+## Explicando a arquitetura :file_folder:
 
 Foi utilizado uma arquitetura de projeto pensando na melhor organização de arquivos e código, segue abaixo as explicações:
 
