@@ -9,6 +9,7 @@ import { validName, validDuplication } from '../../utils/validations.js';
 import { findNames } from '../../utils/findNames.js';
 
 let names = [];
+const dataNames = [];
 
 const Search = () => {
   const [result, setResult] = useState('');
@@ -37,40 +38,47 @@ const Search = () => {
         compareArray = findNames(resp, names);
       }
 
-      if (compareArray.length > 0 && !validationName.valid) {
+      if (
+        (compareArray.length > 0 || names.length > 1) &&
+        !validationName.valid
+      ) {
         let data = [];
 
-        for (let i = 0; i < compareArray.length; i++) {
-          if (result instanceof Array) {
-            result.filter((item) => {
-              if (
-                compareArray.indexOf(item.name) == -1 &&
-                resp.includes(item.name)
-              ) {
-                data.push(item);
-              }
-            });
-          } else {
-            compareArray.indexOf(result.name) == -1 &&
-              resp.includes(result.name) &&
-              data.push(result);
+        dataNames.filter((item) => {
+          if (resp.indexOf(item.name) !== -1) {
+            data.push(item);
           }
-        }
+        });
 
         let validation = validDuplication(data);
 
-        await requestNewNames(compareArray).then((item) => {
-          compareArray.length < 2
-            ? setResult([...validation, item])
-            : setResult([...validation, ...item]);
-        });
-        names = resp;
+        if (compareArray.length > 0) {
+          await requestNewNames(compareArray).then((item) => {
+            if (compareArray.length < 2) {
+              setResult([...validation, item]);
+              dataNames.push(item);
+            } else {
+              setResult([...validation, ...item]);
+              dataNames.push(...item);
+            }
+          });
+        } else {
+          setResult([...validation]);
+        }
+        names.push(...resp);
       }
 
-      if (!validationName.valid && compareArray.length == 0) {
+      if (
+        !validationName.valid &&
+        compareArray.length == 0 &&
+        names.length < 1
+      ) {
         let response = await requestNewNames(resp);
+        response instanceof Array
+          ? dataNames.push(...response)
+          : dataNames.push(response);
         setResult(response);
-        names = resp;
+        names.push(...resp);
       }
     }
   };
