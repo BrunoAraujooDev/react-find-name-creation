@@ -7,6 +7,7 @@
   width: 100vw;
   background-color: #457b9d;
   color: #fff;
+  padding: 1rem;
 }
 
 .arrow-div-info {
@@ -23,6 +24,7 @@
 @media (max-width: 800px) {
   .arrow-div-info > img {
     margin-left: 0px;
+    margin-top: 1rem;
     width: 150%;
   }
 }
