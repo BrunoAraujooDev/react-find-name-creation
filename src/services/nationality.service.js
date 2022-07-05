@@ -7,7 +7,7 @@ export const getNameOrigin = async (name) => {
     const resp = await http.get(`${path}${name}`);
     return resp.data;
   } catch (error) {
-    return error.message;
+    return error;
   }
 };
 

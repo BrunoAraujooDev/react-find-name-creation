@@ -16,11 +16,11 @@ const Search = () => {
   const [valid, setValid] = useState(true);
   const [message, setMessage] = useState([]);
 
-  const getNameAndValidate = () => {
+  const getNameAndValidate = async () => {
     let name = inputValue.split(' ');
     let resp = validDuplication(name);
     let validationName;
-    let compareArray;
+    let compareArray = [];
 
     if (resp.length > 10) {
       setValid(true);
@@ -33,27 +33,43 @@ const Search = () => {
       setValid(validationName.valid);
       setMessage(validationName.message);
 
-      compareArray = findNames(resp, names);
-
-      if (
-        !compareArray &&
-        names.length !== resp.length &&
-        names.length !== 0 &&
-        validationName !== undefined &&
-        result !== ''
-      ) {
-        setResult(() => {
-          const data = result.filter((item, i) => item.name === resp[i]);
-          return data;
-        });
+      if (names.length > 0) {
+        compareArray = findNames(resp, names);
       }
 
-      if (
-        !validationName.valid &&
-        compareArray &&
-        names.length !== resp.length
-      ) {
-        requestOrigin(resp);
+      if (compareArray.length > 0 && !validationName.valid) {
+        let data = [];
+
+        for (let i = 0; i < compareArray.length; i++) {
+          if (result instanceof Array) {
+            result.filter((item) => {
+              if (
+                compareArray.indexOf(item.name) == -1 &&
+                resp.includes(item.name)
+              ) {
+                data.push(item);
+              }
+            });
+          } else {
+            compareArray.indexOf(result.name) == -1 &&
+              resp.includes(result.name) &&
+              data.push(result);
+          }
+        }
+
+        let validation = validDuplication(data);
+
+        await requestNewNames(compareArray).then((item) => {
+          compareArray.length < 2
+            ? setResult([...validation, item])
+            : setResult([...validation, ...item]);
+        });
+        names = resp;
+      }
+
+      if (!validationName.valid && compareArray.length == 0) {
+        let response = await requestNewNames(resp);
+        setResult(response);
         names = resp;
       }
     }
@@ -61,12 +77,21 @@ const Search = () => {
     message.length > 0 && setResult('');
   };
 
-  const requestOrigin = async (name) => {
+  const requestNewNames = async (name) => {
     if (name.length > 1) {
-      const resp = await getNamesOrigin(name);
-      setResult(resp.data);
+      try {
+        let response = await getNamesOrigin(name);
+        return response.data;
+      } catch (e) {
+        (e) => setMessage(e.error);
+      }
     } else {
-      await getNameOrigin(name).then((resp) => setResult(resp));
+      try {
+        let resolve = await getNameOrigin(name);
+        return resolve;
+      } catch (e) {
+        (e) => setMessage(e.error);
+      }
     }
   };
 

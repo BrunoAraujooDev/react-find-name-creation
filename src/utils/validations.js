@@ -1,5 +1,5 @@
 export const validName = (name) => {
-  const regex = /[^a-záàâãéèêíïóôõöúçñ]/;
+  const regex = /[^a-zA-Záàâãéèêíïóôõöúçñ]/;
   let isValid = [];
   let message = [];
   let valid;
