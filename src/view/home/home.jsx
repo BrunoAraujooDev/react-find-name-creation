@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './home.css';
 import Search from '../../components/search/search.jsx';
 import Info from '../../components/info/info';
-import arrow from '../../assets/right-arrow.png';
 
 const Home = () => {
   const [slide, setSlide] = useState(true);
